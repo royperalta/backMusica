@@ -1,6 +1,6 @@
 const { spawn } = require('child_process');
 
-async function listarTitulos() {
+async function listarIds() {
     // Reemplaza 'URL_DEL_PLAYLIST' con la URL real del playlist de YouTube que deseas analizar.
     const playlistUrl = 'https://www.youtube.com/playlist?list=PL4fGSI1pDJn61j743B9r2LNeLCUUZsRMV';
 
@@ -10,33 +10,35 @@ async function listarTitulos() {
     // Argumentos para yt-dlp (obtener títulos de un playlist)
     const args = [
         '--skip-download',
-        '--get-title',
+        '--get-id',
         '--flat-playlist',
         '--encoding', 'utf-8', // Configuración de codificación utf-8
         playlistUrl,
     ];
+    
 
     // Crear una promesa para manejar la ejecución asíncrona de yt-dlp
     return new Promise((resolve, reject) => {
         const result = {
-            heading: ['id', 'position', 'title', 'fecha'],
+            heading: ['position', 'id', 'fecha'],
             data: [],
         };
 
         // Ejecutar yt-dlp como un proceso hijo
         const ytDlpProcess = spawn(ytDlpPath, args);
+        
         let count = 0
         // Capturar la salida estándar (stdout) del proceso
         ytDlpProcess.stdout.on('data', (data) => {
-            console.log(data.toString().trim())
-            const titles = data.toString().trim().split('\n');
-
+          
+            const ids = data.toString().trim().split('\n');
             // Agregar los títulos al arreglo de datos en el formato deseado
             count++
-            titles.forEach((title, index) => {
-                result.data.push(['id', count, title, new Date().toISOString()]);
+            ids.forEach((id, index) => {
+                result.data.push([count, id, new Date().toISOString()]);
             });
         });
+        
 
         // Capturar errores si los hay
         ytDlpProcess.stderr.on('data', (data) => {
@@ -54,5 +56,4 @@ async function listarTitulos() {
     });
 }
 
-
-module.exports = listarTitulos;
+module.exports = listarIds;
