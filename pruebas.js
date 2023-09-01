@@ -32,3 +32,10 @@ async function consumirDatos(){
 }
 
 consumirDatos()
+
+let dato = "  hola como estas  "
+console.log(dato.trim().split("o"))
+
+let numeros = [1,2,3,4,5]
+numeros.push(...[10,1,12])
+console.log(numeros)
