@@ -28,7 +28,7 @@ async function listarTitulos() {
         let count = 0
         // Capturar la salida estándar (stdout) del proceso
         ytDlpProcess.stdout.on('data', (data) => {
-            console.log(data.toString().trim())
+            //console.log(data.toString().trim())
             const titles = data.toString().trim().split('\n');
 
             // Agregar los títulos al arreglo de datos en el formato deseado

@@ -9,9 +9,8 @@ async function listarUrls() {
 
     // Argumentos para yt-dlp (obtener títulos de un playlist)
     const args = [
-        '--skip-download',
-        '--print urls ',
-        '--flat-playlist',       
+        '--get-url',
+        '--flat-playlist',
         playlistUrl,
     ];
 
@@ -27,7 +26,7 @@ async function listarUrls() {
         let count = 0
         // Capturar la salida estándar (stdout) del proceso
         ytDlpProcess.stdout.on('data', (data) => {
-            console.log(data.toString().trim())
+           // console.log(data.toString().trim())
             const urls = data.toString().trim().split('\n');
 
             // Agregar los títulos al arreglo de datos en el formato deseado
