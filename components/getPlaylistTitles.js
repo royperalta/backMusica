@@ -1,6 +1,6 @@
 const { spawn } = require('child_process');
 
-async function listarTitulos() {
+async function listarTitulos(total) {
     // Reemplaza 'URL_DEL_PLAYLIST' con la URL real del playlist de YouTube que deseas analizar.
     const playlistUrl = 'https://www.youtube.com/playlist?list=PL4fGSI1pDJn61j743B9r2LNeLCUUZsRMV';
 
@@ -13,6 +13,7 @@ async function listarTitulos() {
         '--get-title',
         '--flat-playlist',
         '--encoding', 'utf-8', // Configuración de codificación utf-8
+        '--playlist-items', `1-${total}`,
         playlistUrl,
     ];
 

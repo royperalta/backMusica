@@ -1,6 +1,6 @@
 const { spawn } = require('child_process');
 
-async function listarUrls() {
+async function listarUrls(total) {
     // Reemplaza 'URL_DEL_PLAYLIST' con la URL real del playlist de YouTube que deseas analizar.
     const playlistUrl = 'https://www.youtube.com/playlist?list=PL4fGSI1pDJn61j743B9r2LNeLCUUZsRMV';
 
@@ -11,6 +11,7 @@ async function listarUrls() {
     const args = [
         '--get-url',
         '--flat-playlist',
+        '--playlist-items', `1-${total}`,
         playlistUrl,
     ];
 

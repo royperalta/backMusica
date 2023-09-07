@@ -1,6 +1,6 @@
 const { spawn } = require('child_process');
 
-async function descargarCanciones() {
+async function descargarCanciones(total) {
     // Reemplaza 'URL_DEL_PLAYLIST' con la URL real del playlist de YouTube que deseas descargar.
     const playlistUrl = 'https://www.youtube.com/playlist?list=PL4fGSI1pDJn61j743B9r2LNeLCUUZsRMV';
 
@@ -16,7 +16,8 @@ async function descargarCanciones() {
         '--yes-playlist',
         '-x',
         '--audio-format', 'mp3',
-        `--output`, `${outputDirectory}%(playlist_index)s_%(title)s.%(ext)s`,
+        `--output`, `${outputDirectory}%(playlist_index)s_%(id)s.%(ext)s`,
+        '--playlist-items', `1-${total}`,
         playlistUrl,
     ];
    
