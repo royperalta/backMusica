@@ -5,8 +5,8 @@ const listarIds = require("./getPlaylistId")
 const listarTitulos = require("./getPlaylistTitles")
 const ruta_audio = require("./obtenerRuta")
 
-async function procesarInformacion(total,url) {
-   
+async function procesarInformacion(total, url) {
+
     try {
 
         //Descargar canciones
@@ -25,8 +25,8 @@ async function procesarInformacion(total,url) {
 
         const fechaHoy = new Date();
         const fechaUtc = fechaHoy.toISOString();
-        
-        for (let index = 0; index < total; index++) {           
+
+        for (let index = 0; index < total; index++) {
             datos.push({
                 "id_video": id_videos.data[index][1],
                 "position": index + 1,
@@ -40,7 +40,7 @@ async function procesarInformacion(total,url) {
         for (const dato of datos) {
             const info = new InfoModel(dato)
             await info.save()
-        }        
+        }
 
     } catch (error) {
         console.log("hay un error al prcesar la informacion", error)
