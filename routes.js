@@ -1,12 +1,10 @@
 const express = require("express")
 const titles = require("./components/getPlaylistTitles.js")
 const photo = require("./components/getFoto.js")
-const ids = require("./components/getPlaylistId.js")
+
 const listarUrls = require("./components/getUrlVideo.js")
 const descargarCanciones = require("./components/getMusic.js")
-const listarIds = require("./components/getPlaylistId.js")
-const listarUrlImages = require("./components/getFoto.js")
-const ruta_audio = require("./components/obtenerRuta.js")
+
 const { default: mongoose } = require("mongoose")
 const InfoModel = require("./model/Info.js")
 const eliminarCanciones = require("./components/eliminarCanciones.js")
@@ -97,20 +95,20 @@ route.get('/info', async (req, res) => {
     try {
         const fechaHoy = new Date(); // Obtenemos la fecha de hoy en formato UTC
         fechaHoy.setUTCHours(0, 0, 0, 0); // Establecemos la hora a las 00:00:00:000 en UTC
-    
+
         // Consulta la colección Info para documentos con fecha igual a la de hoy
         const documentosHoy = await InfoModel.find({
-          fecha: {
-            $gte: new Date(fechaHoy.toISOString()), // Convertimos la fecha a ISO8601
-            $lt: new Date(fechaHoy.toISOString()).setDate(fechaHoy.getDate() + 1) // También convertimos la fecha de mañana a ISO8601
-          }
+            fecha: {
+                $gte: new Date(fechaHoy.toISOString()), // Convertimos la fecha a ISO8601
+                $lt: new Date(fechaHoy.toISOString()).setDate(fechaHoy.getDate() + 1) // También convertimos la fecha de mañana a ISO8601
+            }
         });
-    
+
         res.status(200).json(documentosHoy);
-      } catch (error) {
+    } catch (error) {
         console.error("Error al obtener documentos de hoy:", error);
         res.status(500).json({ error: "Error al obtener documentos de hoy" });
-      }
+    }
 }
 )
 

@@ -9,6 +9,8 @@ async function procesarInformacion(total, url) {
 
     try {
 
+        const listAudio = ruta_audio()
+        console.log(listAudio[0])
         //Descargar canciones
         await descargarCanciones(total)
         //  let json = {}

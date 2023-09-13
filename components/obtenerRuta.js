@@ -1,6 +1,13 @@
 const fs = require('fs')
-const ruta_audio = fs.readdirSync('./downloads')
-//console.log(ruta_audio)
-module.exports = ruta_audio
+
+
+function listarAudios() {
+
+    const ruta_audio = fs.readdirSync('./downloads')
+    //console.log(ruta_audio)
+    return ruta_audio
+}
+
+module.exports = listarAudios
 
 
