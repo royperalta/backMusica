@@ -9,8 +9,7 @@ async function procesarInformacion(total, url) {
 
     try {
 
-        const listAudio = ruta_audio()
-        console.log(listAudio[0])
+      
         //Descargar canciones
         await descargarCanciones(total)
         //  let json = {}
@@ -28,13 +27,16 @@ async function procesarInformacion(total, url) {
         const fechaHoy = new Date();
         const fechaUtc = fechaHoy.toISOString();
 
+        const listAudio = ruta_audio()
+        console.log(listAudio)
+
         for (let index = 0; index < total; index++) {
             datos.push({
                 "id_video": id_videos.data[index][1],
                 "position": index + 1,
                 "titulo": titleJson.data[index][2],
                 "url_image": listImages.data[index][2],
-                "url_audio": `${url}/music/${ruta_audio[index]}`,
+                "url_audio": `${url}/music/${listAudio[index]}`,
                 "fecha": fechaUtc
             })
         }
