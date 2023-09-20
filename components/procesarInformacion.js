@@ -36,7 +36,7 @@ async function procesarInformacion(total, url) {
                 "position": index + 1,
                 "titulo": titleJson.data[index][2],
                 "url_image": listImages.data[index][2],
-                "url_audio": `${url}/music/${listAudio[index]}`,
+                "url_audio": `${url}/music/${listAudio[index]}`, 
                 "fecha": fechaUtc
             })
         }
