@@ -91,25 +91,33 @@ route.get('/procesar', async (req, res) => {
     res.status(200).json({ status: "Ejecutado" })
 })
 
+const tzOffset = +8; // Perú está en UTC-5
+// Ruta para consultar información del día actual en Perú
 route.get('/info', async (req, res) => {
     try {
-        const fechaHoy = new Date(); // Obtenemos la fecha de hoy en formato UTC
-        fechaHoy.setUTCHours(0, 0, 0, 0); // Establecemos la hora a las 00:00:00:000 en UTC
+        const now = new Date(); // Obtener la fecha y hora actual en UTC
+        const peruTime = new Date(now.getTime() + tzOffset * 60 * 60 * 1000); // Convertir a la zona horaria de Perú
 
-        // Consulta la colección Info para documentos con fecha igual a la de hoy
+        // Establecer la hora a las 00:00:00:000 en la zona horaria de Perú
+        peruTime.setHours(0, 0, 0, 0);
+
+        // Calcular la fecha de mañana en la zona horaria de Perú
+        const tomorrow = new Date(peruTime);
+        tomorrow.setDate(peruTime.getDate() + 1);
+
+        // Consultar la colección Info para documentos con fecha igual o posterior a hoy y anterior a mañana en Perú
         const documentosHoy = await InfoModel.find({
             fecha: {
-                $gte: new Date(fechaHoy.toISOString()), // Convertimos la fecha a ISO8601
-                $lt: new Date(fechaHoy.toISOString()).setDate(fechaHoy.getDate() + 1) // También convertimos la fecha de mañana a ISO8601
+                $gte: peruTime,
+                $lt: tomorrow
             }
         });
-
+ console.log(peruTime)
         res.status(200).json(documentosHoy);
     } catch (error) {
-        console.error("Error al obtener documentos de hoy:", error);
-        res.status(500).json({ error: "Error al obtener documentos de hoy" });
+        console.error("Error al obtener documentos de hoy en Perú:", error);
+        res.status(500).json({ error: "Error al obtener documentos de hoy en Perú" });
     }
-}
-)
+});
 
 module.exports = route;
