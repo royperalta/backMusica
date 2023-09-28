@@ -91,7 +91,7 @@ route.get('/procesar', async (req, res) => {
     res.status(200).json({ status: "Ejecutado" })
 })
 
-const tzOffset = +8; // Perú está en UTC-5
+const tzOffset = -5; // Perú está en UTC-5
 // Ruta para consultar información del día actual en Perú
 route.get('/info', async (req, res) => {
     try {
