@@ -91,33 +91,48 @@ route.get('/procesar', async (req, res) => {
     res.status(200).json({ status: "Ejecutado" })
 })
 
-const tzOffset = -5; // Perú está en UTC-5
-// Ruta para consultar información del día actual en Perú
 route.get('/info', async (req, res) => {
     try {
-        const now = new Date(); // Obtener la fecha y hora actual en UTC
-        const peruTime = new Date(now.getTime() + tzOffset * 60 * 60 * 1000); // Convertir a la zona horaria de Perú
+        // Consultar la colección Info para obtener todos los registros ordenados por createdAt de manera descendente (del más nuevo al más antiguo)
+        const documentosOrdenados = await InfoModel.find()
+            .sort({ createdAt: -1 }); // Ordenar por createdAt de manera descendente
 
-        // Establecer la hora a las 00:00:00:000 en la zona horaria de Perú
-        peruTime.setHours(0, 0, 0, 0);
+        // Invertir el orden de los registros para obtener desde el último al primero
+        const registrosInvertidos = documentosOrdenados.reverse();
 
-        // Calcular la fecha de mañana en la zona horaria de Perú
-        const tomorrow = new Date(peruTime);
-        tomorrow.setDate(peruTime.getDate() + 1);
+        // Limitar la respuesta a los últimos 10 registros
+        const ultimos10Registros = registrosInvertidos.slice(0, 10);
 
-        // Consultar la colección Info para documentos con fecha igual o posterior a hoy y anterior a mañana en Perú
+        res.status(200).json(ultimos10Registros);
+    } catch (error) {
+        res.status(500).json(`Error:${error}`)
+    }
+})
+
+/* route.get('/info', async (req, res) => 
+    try {
+        const now = new Date().toISOString(); // Obtener la fecha y hora actual en formato UTC
+        console.log(now)
+        // Calcular la fecha de mañana en formato UTC
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowUTC = tomorrow.toISOString();
+
+        // Consultar la colección Info para documentos con fecha igual o posterior a hoy y anterior a mañana en UTC
         const documentosHoy = await InfoModel.find({
             fecha: {
-                $gte: peruTime,
-                $lt: tomorrow
+                $gte: now,
+                $lt: tomorrowUTC
             }
         });
- console.log(peruTime)
+
+        console.log(now);
         res.status(200).json(documentosHoy);
     } catch (error) {
-        console.error("Error al obtener documentos de hoy en Perú:", error);
-        res.status(500).json({ error: "Error al obtener documentos de hoy en Perú" });
+        console.error("Error al obtener documentos de hoy en UTC:", error);
+        res.status(500).json({ error: "Error al obtener documentos de hoy en UTC" });
     }
-});
+}); */
+
 
 module.exports = route;

@@ -42,6 +42,7 @@ async function procesarInformacion(total, url) {
         }
 
         for (const dato of datos) {
+            console.log(dato.position)
             const info = new InfoModel(dato)
             await info.save()
         }
