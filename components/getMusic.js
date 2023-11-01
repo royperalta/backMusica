@@ -5,7 +5,7 @@ async function descargarCanciones(total) {
     const playlistUrl = 'https://www.youtube.com/playlist?list=PL4fGSI1pDJn4k5jOJjYpq8pluME-gNAnh';
 
     // Ruta al archivo yt-dlp.exe
-    const ytDlpPath = './extensiones/yt-dlp.exe';
+    const ytDlpPath = './extensiones/yt-dlp';
 
     // Directorio de salida para los archivos MP3 descargados
     const outputDirectory = './downloads/';

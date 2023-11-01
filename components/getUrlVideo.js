@@ -5,7 +5,7 @@ async function listarUrls(total) {
     const playlistUrl = 'https://www.youtube.com/playlist?list=PL4fGSI1pDJn4k5jOJjYpq8pluME-gNAnh';
 
     // Ruta al archivo yt-dlp.exe
-    const ytDlpPath = './extensiones/yt-dlp.exe';
+    const ytDlpPath = './extensiones/yt-dlp';
 
     // Argumentos para yt-dlp (obtener títulos de un playlist)
     const args = [
