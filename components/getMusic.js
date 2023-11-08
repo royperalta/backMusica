@@ -1,11 +1,11 @@
 const { spawn } = require('child_process');
 
 async function descargarCanciones(total) {
-    // Reemplaza 'URL_DEL_PLAYLIST' con la URL real del playlist de YouTube que deseas descargar.
+    // Reemplaza 'URL_DEL_PLAYLIST' con la URL real del playlist de YouTube que deseas descargar.h
     const playlistUrl = 'https://www.youtube.com/playlist?list=PL4fGSI1pDJn4k5jOJjYpq8pluME-gNAnh';
 
     // Ruta al archivo yt-dlp.exe
-    const ytDlpPath = './extensiones/yt-dlp';
+    const ytDlpPath = './extensiones/yt-dlp.exe';
 
     // Directorio de salida para los archivos MP3 descargados
     const outputDirectory = './downloads/';
