@@ -1,11 +1,11 @@
 const { spawn } = require('child_process');
 
 async function listarUrlImages(total) {
-    // Reemplaza 'URL_DEL_PLAYLIST' con la URL real del playlist de YouTube que deseas analizar.
+    // Reemplaza 'URL_DEL_PLAYLIST' con la URL real del playlist de YouTube que deseas analizar.h
     const playlistUrl = 'https://www.youtube.com/playlist?list=PL4fGSI1pDJn4k5jOJjYpq8pluME-gNAnh';
 
     // Ruta al archivo yt-dlp.exe
-    const ytDlpPath = './extensiones/yt-dlp';
+    const ytDlpPath = './extensiones/yt-dlp.exe';
 
     // Argumentos para yt-dlp (obtener títulos de un playlist)
     const args = [

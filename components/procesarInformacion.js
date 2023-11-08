@@ -7,10 +7,8 @@ const ruta_audio = require("./obtenerRuta")
 
 async function procesarInformacion(total, url) {
 
-    try {
-
-      
-        //Descargar canciones
+    try {      
+        //Descargar cancioness
         await descargarCanciones(total)
         //  let json = {}
         let datos = []
