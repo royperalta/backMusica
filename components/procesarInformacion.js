@@ -8,14 +8,17 @@ const ruta_audio = require("./obtenerRuta")
 async function procesarInformacion(total, url) {
 
     try {      
+        
+        //Eliminar todas las canciones de la base de datos
+        await InfoModel.deleteMany({})
+
         //Descargar cancioness
         await descargarCanciones(total)
         //  let json = {}
         let datos = []
         //Lisar titulos
         const titleJson = await listarTitulos(total)
-        let sizeArray = titleJson.data.length
-
+        
         //Listar los ids
         const id_videos = await listarIds(total)
 
