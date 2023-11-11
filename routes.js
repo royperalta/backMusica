@@ -15,7 +15,7 @@ const CronJob = require("cron").CronJob;
 mongoose.connect(process.env.MONGO_URL)
 
 const route = express.Router()
-const url = 'http://backmusic.ddns.net:20000'
+const url = 'https://envivo.top:9100'
 
 const total = 10
 
