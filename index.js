@@ -15,8 +15,8 @@ app.use('/api', route);
 
 // Configuración para el servidor HTTPS
 const httpsOptions = {
-  key: fs.readFileSync('/etc/ssl/virtualmin/1692085281313966/ssl.key'), // Reemplaza con la ruta a tu clave privada
-  cert: fs.readFileSync('/etc/ssl/virtualmin/1692085281313966/ssl.cert'), // Reemplaza con la ruta a tu certificado
+  key: fs.readFileSync('/etc/ssl/virtualmin/169985749449668/ssl.key'), // Reemplaza con la ruta a tu clave privada
+  cert: fs.readFileSync('/etc/ssl/virtualmin/169985749449668/ssl.cert'), // Reemplaza con la ruta a tu certificado
 };
 
 const httpsServer = https.createServer(httpsOptions, app);
