@@ -1,4 +1,48 @@
-const { spawn } = require('child_process');
+const { spawnSync } = require('child_process');
+
+async function listarIds() {
+    const playlistUrl = 'https://www.youtube.com/playlist?list=PL4fGSI1pDJn4k5jOJjYpq8pluME-gNAnh';
+    const ytDlpPath = './extensiones/yt-dlp';
+
+    const args = [
+        '--skip-download',
+        '--get-id',
+        '--flat-playlist',
+        '--encoding', 'utf-8',
+        playlistUrl,
+    ];
+
+    const result = {
+        heading: ['position', 'id', 'fecha'],
+        data: [],
+    };
+
+    const ytDlpProcess = spawnSync(ytDlpPath, args, { encoding: 'utf-8' });
+
+    if (ytDlpProcess.error) {
+        throw new Error(`Error al ejecutar el proceso: ${ytDlpProcess.error}`);
+    }
+
+    if (ytDlpProcess.status !== 0) {
+        throw new Error(`Proceso de yt-dlp finalizado con código de salida ${ytDlpProcess.status}`);
+    }
+
+    const ids = ytDlpProcess.stdout.trim().split('\n');
+    let count = 0;
+
+    ids.forEach((id) => {
+       
+        count++;
+        result.data.push({ position: count, id: id, fecha: new Date().toISOString() });
+    });
+
+    return result;
+}
+
+module.exports = listarIds;
+
+
+/* const { spawn } = require('child_process');
 
 async function listarIds() {
     // Reemplaza 'URL_DEL_PLAYLIST' con la URL real del playlist de YouTube que deseas analizar.h
@@ -57,4 +101,4 @@ async function listarIds() {
     });
 }
 
-module.exports = listarIds;
+module.exports = listarIds; */

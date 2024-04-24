@@ -11,6 +11,6 @@ const InfoSchema = new Schema({
     fecha: Date
 })
 
-const InfoModel = mongoose.model('info',InfoSchema)
+const InfoModel = mongoose.model('musicas',InfoSchema)
 
 module.exports = InfoModel

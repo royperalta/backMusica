@@ -1,16 +1,9 @@
-const { spawn } = require('child_process');
+const { spawnSync } = require('child_process');
 
 async function descargarCanciones(total) {
-    // Reemplaza 'URL_DEL_PLAYLIST' con la URL real del playlist de YouTube que deseas descargar.h
     const playlistUrl = 'https://www.youtube.com/playlist?list=PL4fGSI1pDJn4k5jOJjYpq8pluME-gNAnh';
-
-    // Ruta al archivo yt-dlp.exe
     const ytDlpPath = './extensiones/yt-dlp';
-
-    // Directorio de salida para los archivos MP3 descargados
     const outputDirectory = './downloads/';
-
-    // Argumentos para yt-dlp (obtener títulos de un playlist)
     const args = [
         '-i',
         '--yes-playlist',
@@ -20,29 +13,20 @@ async function descargarCanciones(total) {
         '--playlist-items', `1-${total}`,
         playlistUrl,
     ];
-   
-    return new Promise((resolve, reject) => {
-        // Ejecutar el comando
-        const ytDlpProcess = spawn(ytDlpPath, args);
 
-        ytDlpProcess.stdout.on('data', (data) => {
-            
-            console.log(`stdout: ${data}`);
-        });
+    // Ejecutar el comando de manera sincrónica
+    const result = spawnSync(ytDlpPath, args);
 
-        ytDlpProcess.stderr.on('data', (data) => {
-            reject(`Error al obtener la URL De de las imágenes: ${data}`);
-        });
+    if (result.error) {
+        throw new Error(`Error al ejecutar yt-dlp: ${result.error.message}`);
+    }
 
-        // Manejar el cierre del proceso
-        ytDlpProcess.on('close', (code) => {
-            if (code === 0) {
-                resolve();
-            } else {
-                reject(`Proceso de yt-dlp finalizado con código de salida ${code}`);
-            }
-        });
-    });
+    if (result.status !== 0) {
+        throw new Error(`Proceso de yt-dlp finalizado con código de salida ${result.status}`);
+    }
+
+    // El proceso terminó exitosamente
+    console.log('Descarga completada correctamente.');
 }
 
-module.exports = descargarCanciones
+module.exports = descargarCanciones;

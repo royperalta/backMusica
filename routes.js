@@ -17,6 +17,8 @@ mongoose.connect(process.env.MONGO_URL)
 const route = express.Router()
 //url base para descargar las canciones
 const url = 'https://envivo.top:9100'
+//const url = 'http://localhost:9100'
+
 
 const total = 10
 
@@ -88,6 +90,7 @@ route.get('/getMusic', async (req, res) => {
 })
 
 route.get('/procesar', async (req, res) => {
+    console.log("Procesando.........................")
     await procesarInformacion(total, url)
     res.status(200).json({ status: "Ejecutado" })
 })
