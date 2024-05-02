@@ -120,6 +120,10 @@ route.get('/descargar/:parametro', (req, res) => {
     res.json(data);
 });
 
+route.get('/test', (req, res) => {    
+    res.json({data:"correcto"});
+});
+
 
 
 function borrarCarpetasDescargas() {
