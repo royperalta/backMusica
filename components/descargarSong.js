@@ -58,7 +58,8 @@ function descargarCancion(busqueda) {
     return {
         idCarpeta: idUnico,
         busqueda: busqueda,
-        nombreOriginal: archivoDescargado
+        nombreOriginal: archivoDescargado,
+        ruta:`https://envivo.top/descargas/${idUnico}/${busqueda}.mp3`
     };
 }
 
