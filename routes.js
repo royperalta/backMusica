@@ -10,7 +10,7 @@ const InfoModel = require("./model/Info.js")
 const eliminarCanciones = require("./components/eliminarCanciones.js")
 const procesarInformacion = require("./components/procesarInformacion.js")
 const CronJob = require("cron").CronJob;
-
+const descargarSong = require('./components/descargarSong.js')
 
 mongoose.connect(process.env.MONGO_URL)
 
@@ -112,6 +112,39 @@ route.get('/info', async (req, res) => {
         res.status(500).json(`Error:${error}`)
     }
 })
+
+
+route.get('/descargar/:parametro', (req, res) => {
+    const texto = req.params.parametro;
+    const data = descargarSong(texto)
+    res.json(data);
+});
+
+
+
+function borrarCarpetasDescargas() {
+    const descargasPath = path.join(__dirname, '..', 'Descargas');
+
+    try {
+        const carpetas = fs.readdirSync(descargasPath);
+        carpetas.forEach(carpeta => {
+            const carpetaPath = path.join(descargasPath, carpeta);
+            fs.rmdirSync(carpetaPath, { recursive: true });
+            console.log(`Carpeta ${carpeta} eliminada.`);
+        });
+    } catch (error) {
+        console.error('Error al borrar las carpetas de Descargas:', error);
+    }
+}
+
+// Tarea programada para ejecutar la función a la 1 de la mañana todos los días
+const tareaBorrarCarpetas = new CronJob('0 1 * * *', () => {
+    console.log('Ejecutando la tarea de borrado de carpetas...');
+    borrarCarpetasDescargas();
+}, null, true, "America/New_York"); // Cambia a la zona horaria adecuada
+
+tareaBorrarCarpetas.start();
+
 
 /* route.get('/info', async (req, res) => 
     try {

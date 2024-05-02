@@ -11,6 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/music', express.static('./downloads'));
+app.use('/descargas', express.static('./Descargas'));
 app.use('/api', route);
 
 // Configuración para el servidor HTTPS
