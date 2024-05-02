@@ -59,7 +59,7 @@ function descargarCancion(busqueda) {
         idCarpeta: idUnico,
         busqueda: busqueda,
         nombreOriginal: archivoDescargado,
-        ruta:`https://envivo.top/descargas/${idUnico}/${busqueda}.mp3`
+        ruta:`https://envivo.top:9100/descargas/${idUnico}/${encodeURIComponent(busqueda)}.mp3`
     };
 }
 
