@@ -2,6 +2,8 @@ const { spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
+const ytDlpPath = './extensiones/yt-dlp'; // Ruta al ejecutable yt-dlp
+
 function generarIdUnico() {
     return Math.random().toString(36).substring(2, 15);
 }
@@ -21,7 +23,7 @@ function descargarCancion(busqueda) {
         return null;
     }
 
-    const comando = 'yt-dlp';
+    const comando = ytDlpPath; // Utilizando la ruta especificada para yt-dlp
     const argumentos = [
         '-x',
         '--audio-format',
@@ -58,9 +60,6 @@ function descargarCancion(busqueda) {
         busqueda: busqueda,
         nombreOriginal: archivoDescargado
     };
-
-
-
 }
 
 module.exports = descargarCancion
