@@ -15,10 +15,17 @@ app.use('/descargas', express.static('./Descargas'));
 app.use('/api', route);
 
 // Configuración para el servidor HTTPS
-const httpsOptions = {
+/* const httpsOptions = {
   key: fs.readFileSync('/etc/ssl/virtualmin/169985749449668/ssl.key'), // Reemplaza con la ruta a tu clave privada
   cert: fs.readFileSync('/etc/ssl/virtualmin/169985749449668/ssl.cert'), // Reemplaza con la ruta a tu certificado
 };
+ */
+
+const httpsOptions = {
+  key: fs.readFileSync('/etc/letsencrypt/live/envivo.top/privkey.pem'), // Ruta a tu clave privada
+  cert: fs.readFileSync('/etc/letsencrypt/live/envivo.top/fullchain.pem'), // Ruta a tu certificado
+};
+
 
 const httpsServer = https.createServer(httpsOptions, app);
 
