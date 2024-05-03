@@ -114,9 +114,9 @@ route.get('/info', async (req, res) => {
 })
 
 
-route.get('/descargar/:parametro', (req, res) => {
+route.get('/descargar/:parametro',async (req, res) => {
     const texto = req.params.parametro;
-    const data = descargarSong(texto)
+    const data = await descargarSong(texto)
     res.json(data);
 });
 
