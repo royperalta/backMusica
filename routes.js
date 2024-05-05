@@ -11,6 +11,7 @@ const eliminarCanciones = require("./components/eliminarCanciones.js")
 const procesarInformacion = require("./components/procesarInformacion.js")
 const CronJob = require("cron").CronJob;
 const descargarSong = require('./components/descargarSong.js')
+const descargarCancionWait = require("./components/descargarWait.js")
 
 mongoose.connect(process.env.MONGO_URL)
 
@@ -119,6 +120,13 @@ route.get('/descargar/:parametro',async (req, res) => {
     const data = await descargarSong(texto)
     res.json(data);
 });
+
+route.get('/descargarsong/:parametro',async (req, res) => {
+    const texto = req.params.parametro;
+    const data = await descargarCancionWait(texto)
+    res.json(data);
+});
+
 
 route.get('/test', (req, res) => {    
     res.json({data:"correcto"});
