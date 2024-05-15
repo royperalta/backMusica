@@ -95,10 +95,20 @@ async function descargarCancion(busqueda) {
             .then(() => fs.mkdir(carpeta))
             .then(() => {
                 const comando = ytDlpPath; // Utilizando la ruta especificada para yt-dlp
+                /* const argumentos = [
+                    '-x',
+                    '--audio-format',
+                    'mp3',
+                    `ytsearch1:${busqueda}`,
+                    '-o',
+                    `${carpeta}/%(title)s.%(ext)s`
+                ]; */
                 const argumentos = [
                     '-x',
                     '--audio-format',
                     'mp3',
+                    '--audio-quality',
+                    '9', // calidad mínima
                     `ytsearch1:${busqueda}`,
                     '-o',
                     `${carpeta}/%(title)s.%(ext)s`
