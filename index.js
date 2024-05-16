@@ -34,8 +34,8 @@ const PORT = 9100; // Cambié el puerto a 9100
 httpsServer.listen(PORT, () => {
   console.log('El servidor está corriendo en el puerto ' + PORT);
 });
-/* 
-const PORT = 9100; // Cambié el puerto a 9100
+
+/* const PORT = 9100; // Cambié el puerto a 9100
 app.listen(PORT, () => {
   console.log('El servidor está corriendo en el puerto ' + PORT);
 }); */

@@ -96,37 +96,14 @@ async function descargarCancion(busqueda) {
             .then(() => {
                 const comando = ytDlpPath; // Utilizando la ruta especificada para yt-dlp
                 const argumentos = [
-                    '-x',
+                    '--extract-audio',
                     '--audio-format',
                     'm4a',
-                    `ytsearch1:${busqueda}`,
+                    `ytsearch:${busqueda}`,
                     '-o',
-                    `${carpeta}/%(title)s.%(ext)s`
+                    `${carpeta}/${nombreArchivo}` // Especificar el nombre del archivo directamente aquí
                 ];
-               /*  const argumentos = [
-                    '-x',
-                    '--audio-format',
-                    'm4a',
-                    '--audio-quality',
-                    '9', // calidad mínima
-                    `ytsearch1:${busqueda}`,
-                    '-o',
-                    `${carpeta}/%(title)s.%(ext)s`
-                ]; */
 
-               /*  const argumentos = [
-                    '-x',
-                    '--audio-format',
-                    'm4a',
-                    '--audio-quality',
-                    '9', // calidad mínima
-                    '--format',
-                    'bestaudio/best', // selecciona el mejor formato de audio disponible
-                    `ytsearch1:${busqueda}`,
-                    '-o',
-                    `${carpeta}/%(title)s.%(ext)s`
-                ]; */
-                
                 const proceso = spawn(comando, argumentos);
 
                 proceso.on('error', (error) => {
@@ -138,18 +115,6 @@ async function descargarCancion(busqueda) {
                     if (code === 0) {
                         console.log('Canción descargada correctamente.');
                         console.log('La canción se ha guardado en:', carpeta);
-
-                        try {
-                            const archivos = await fs.readdir(carpeta);
-                            const archivoDescargado = archivos[0];
-                            const rutaArchivoDescargado = path.join(carpeta, archivoDescargado);
-                            const rutaNuevoNombre = path.join(carpeta, nombreArchivo);
-                            await fs.rename(rutaArchivoDescargado, rutaNuevoNombre);
-                            console.log('Canción renombrada correctamente.');
-                        } catch (error) {
-                            console.error('Error al renombrar la canción:', error);
-                            reject(error);
-                        }
 
                         const resultado = {
                             idCarpeta: idUnico,
@@ -178,6 +143,7 @@ async function descargarCancion(busqueda) {
 }
 
 module.exports = descargarCancion;
+
 
 // Uso de la función
 /* const busqueda = 'corazon serrano ';
