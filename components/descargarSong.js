@@ -103,7 +103,7 @@ async function descargarCancion(busqueda) {
                     '-o',
                     `${carpeta}/%(title)s.%(ext)s`
                 ]; */
-                const argumentos = [
+               /*  const argumentos = [
                     '-x',
                     '--audio-format',
                     'm4a',
@@ -112,8 +112,21 @@ async function descargarCancion(busqueda) {
                     `ytsearch1:${busqueda}`,
                     '-o',
                     `${carpeta}/%(title)s.%(ext)s`
-                ];
+                ]; */
 
+                const argumentos = [
+                    '-x',
+                    '--audio-format',
+                    'm4a',
+                    '--audio-quality',
+                    '9', // calidad mínima
+                    '--format',
+                    'bestaudio/best', // selecciona el mejor formato de audio disponible
+                    `ytsearch1:${busqueda}`,
+                    '-o',
+                    `${carpeta}/%(title)s.%(ext)s`
+                ];
+                
                 const proceso = spawn(comando, argumentos);
 
                 proceso.on('error', (error) => {
