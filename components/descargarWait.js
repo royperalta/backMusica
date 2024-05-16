@@ -102,7 +102,7 @@ async function descargarCancion(busqueda) {
                     '--no-check-certificate', // No verificar certificados SSL
                     `ytsearch:${busqueda}`,
                     '-o',
-                    `${carpeta}/${nombreArchivo}.opus` // Especificar el nombre del archivo directamente aquí
+                    `${carpeta}/${nombreArchivo}` // Especificar el nombre del archivo directamente aquí
                 ];
 
                 const proceso = spawn(comando, argumentos);
