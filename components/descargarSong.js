@@ -106,7 +106,7 @@ async function descargarCancion(busqueda) {
                 const argumentos = [
                     '-x',
                     '--audio-format',
-                    'mp3',
+                    'aac',
                     '--audio-quality',
                     '9', // calidad mínima
                     `ytsearch1:${busqueda}`,
