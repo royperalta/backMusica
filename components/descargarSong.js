@@ -89,7 +89,7 @@ async function descargarCancion(busqueda) {
     return new Promise((resolve, reject) => {
         const idUnico = generarIdUnico();
         const carpeta = path.join(descargasPath, idUnico);
-        const nombreArchivo = `${busqueda}.mp3`;
+        const nombreArchivo = `${busqueda}.aac`;
 
         fs.mkdir(descargasPath, { recursive: true })
             .then(() => fs.mkdir(carpeta))
