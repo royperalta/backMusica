@@ -1,4 +1,4 @@
- const { spawnSync } = require('child_process');
+/*  const { spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
@@ -72,4 +72,70 @@ if (resultado) {
 } else {
     console.log('Error al descargar la canción.');
 }
- */ 
+ */  
+
+
+const { spawn } = require('child_process');
+const fs = require('fs').promises;
+const path = require('path');
+
+const ytDlpPath = './extensiones/yt-dlp'; // Ruta al ejecutable yt-dlp
+const descargasPath = path.join(__dirname, '..', 'Descargas'); // Carpeta "Descargas" en la raíz principal
+
+function generarIdUnico() {
+    return Math.random().toString(36).substring(2, 15);
+}
+
+async function descargarCancion(busqueda) {
+    return new Promise((resolve, reject) => {
+        const idUnico = generarIdUnico();
+        const carpeta = path.join(descargasPath, idUnico);
+        const nombreArchivo = `${busqueda}`;
+
+        fs.mkdir(descargasPath, { recursive: true })
+            .then(() => fs.mkdir(carpeta))
+            .then(() => {
+                const comando = ytDlpPath; // Utilizando la ruta especificada para yt-dlp
+                const argumentos = [
+                    '--extract-audio',                   
+                    '--socket-timeout', '10', // Tiempo de espera del socket (en segundos)
+                    '--no-check-certificate', // No verificar certificados SSL
+                    `ytsearch:${busqueda}`,
+                    '-o',
+                    `${carpeta}/${nombreArchivo}.opus` // Especificar el nombre del archivo directamente aquí
+                ];
+
+                const proceso = spawn(comando, argumentos);
+
+                proceso.on('error', (error) => {
+                    console.error('Error al ejecutar yt-dlp:', error);
+                    reject(error);
+                });
+
+                proceso.on('close', async (code) => {
+                    if (code === 0) {
+                        console.log('Canción descargada correctamente.');
+                        console.log('La canción se ha guardado en:', carpeta);
+
+                        // Devolvemos los datos necesarios inmediatamente
+                        const resultado = {
+                            idCarpeta: idUnico,
+                            busqueda: busqueda,
+                            ruta: `https://envivo.top:9100/descargas/${idUnico}/${encodeURIComponent(nombreArchivo)}.opus`
+                        };
+                        resolve(resultado);
+                    } else {
+                        console.error('Error al descargar la canción.');
+                        reject(new Error('Error al descargar la canción'));
+                    }
+                });
+            })
+            .catch((error) => {
+                console.error('Error al crear la carpeta:', error);
+                reject(error);
+            });
+    });
+}
+
+
+module.exports = descargarCancion;
