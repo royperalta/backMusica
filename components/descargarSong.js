@@ -89,16 +89,16 @@ async function descargarCancion(busqueda) {
     return new Promise((resolve, reject) => {
         const idUnico = generarIdUnico();
         const carpeta = path.join(descargasPath, idUnico);
-        const nombreArchivo = `${busqueda}.m4a`;
+        const nombreArchivo = `${busqueda}`;
 
         fs.mkdir(descargasPath, { recursive: true })
             .then(() => fs.mkdir(carpeta))
             .then(() => {
                 const comando = ytDlpPath; // Utilizando la ruta especificada para yt-dlp
                 const argumentos = [
-                    '--extract-audio',
-                    '--audio-format',
-                    'm4a',
+                    '--extract-audio',                   
+                    '--socket-timeout', '10', // Tiempo de espera del socket (en segundos)
+                    '--no-check-certificate', // No verificar certificados SSL
                     `ytsearch:${busqueda}`,
                     '-o',
                     `${carpeta}/${nombreArchivo}` // Especificar el nombre del archivo directamente aquí
@@ -115,13 +115,6 @@ async function descargarCancion(busqueda) {
                     if (code === 0) {
                         console.log('Canción descargada correctamente.');
                         console.log('La canción se ha guardado en:', carpeta);
-
-                        const resultado = {
-                            idCarpeta: idUnico,
-                            busqueda: busqueda,
-                            ruta: `https://envivo.top:9100/descargas/${idUnico}/${encodeURIComponent(nombreArchivo)}`
-                        };
-                        resolve(resultado);
                     } else {
                         console.error('Error al descargar la canción.');
                         reject(new Error('Error al descargar la canción'));
@@ -137,7 +130,7 @@ async function descargarCancion(busqueda) {
         resolve({
             idCarpeta: idUnico,
             busqueda: busqueda,
-            ruta: `https://envivo.top:9100/descargas/${idUnico}/${encodeURIComponent(nombreArchivo)}`
+            ruta: `https://envivo.top:9100/descargas/${idUnico}/${encodeURIComponent(nombreArchivo)}.opus`
         });
     });
 }

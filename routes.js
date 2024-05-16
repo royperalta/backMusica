@@ -4,7 +4,7 @@ const photo = require("./components/getFoto.js")
 
 const listarUrls = require("./components/getUrlVideo.js")
 const descargarCanciones = require("./components/getMusic.js")
-
+const fs = require('fs')
 const { default: mongoose } = require("mongoose")
 const InfoModel = require("./model/Info.js")
 const eliminarCanciones = require("./components/eliminarCanciones.js")
@@ -12,6 +12,8 @@ const procesarInformacion = require("./components/procesarInformacion.js")
 const CronJob = require("cron").CronJob;
 const descargarSong = require('./components/descargarSong.js')
 const descargarCancionWait = require("./components/descargarWait.js")
+const path = require('path'); // Añade esta línea para importar el módulo 'path'
+const descargasPath = path.join(__dirname, '.', 'Descargas');
 
 mongoose.connect(process.env.MONGO_URL)
 
@@ -134,8 +136,7 @@ route.get('/test', (req, res) => {
 
 
 
-function borrarCarpetasDescargas() {
-    const descargasPath = path.join(__dirname, '..', 'Descargas');
+async function borrarCarpetasDescargas() {   
 
     try {
         const carpetas = fs.readdirSync(descargasPath);
@@ -156,6 +157,17 @@ const tareaBorrarCarpetas = new CronJob('0 1 * * *', () => {
 }, null, true, "America/New_York"); // Cambia a la zona horaria adecuada
 
 tareaBorrarCarpetas.start();
+
+// Endpoint para eliminar las carpetas de descargas
+route.delete('/delete', async (req, res) => {
+    try {
+        await borrarCarpetasDescargas();
+        res.status(200).send('Las carpetas de descargas han sido eliminadas.');
+    } catch (error) {
+        console.error('Error al eliminar las carpetas de descargas:', error);
+        res.status(500).send('Error al eliminar las carpetas de descargas.');
+    }
+});
 
 
 /* route.get('/info', async (req, res) => 
