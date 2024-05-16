@@ -89,7 +89,7 @@ async function descargarCancion(busqueda) {
     return new Promise((resolve, reject) => {
         const idUnico = generarIdUnico();
         const carpeta = path.join(descargasPath, idUnico);
-        const nombreArchivo = `${busqueda}.aac`;
+        const nombreArchivo = `${busqueda}.m4a`;
 
         fs.mkdir(descargasPath, { recursive: true })
             .then(() => fs.mkdir(carpeta))
@@ -106,7 +106,7 @@ async function descargarCancion(busqueda) {
                 const argumentos = [
                     '-x',
                     '--audio-format',
-                    'aac',
+                    'm4a',
                     '--audio-quality',
                     '9', // calidad mínima
                     `ytsearch1:${busqueda}`,
