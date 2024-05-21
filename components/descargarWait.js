@@ -100,6 +100,7 @@ async function descargarCancion(busqueda) {
                     '--extract-audio',                   
                     '--socket-timeout', '10', // Tiempo de espera del socket (en segundos)
                     '--no-check-certificate', // No verificar certificados SSL
+                    '--match-filter', 'duration < 1200', // Filtrar videos con duración menor a 1200 segundos (20 minutos)
                     `ytsearch:${busqueda}`,
                     '-o',
                     `${carpeta}/${nombreArchivo}` // Especificar el nombre del archivo directamente aquí
