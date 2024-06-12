@@ -215,6 +215,7 @@ const path = require('path');
 
 const ytDlpPath = './extensiones/yt-dlp'; // Path to the yt-dlp executable
 const descargasPath = path.join(__dirname, '..', 'Descargas'); // "Descargas" folder in the root directory
+const cookiesPath = './youtube_cookies.txt'; // Path to the cookies file
 
 function generarIdUnico() {
     return Math.random().toString(36).substring(2, 15);
@@ -242,7 +243,8 @@ async function descargarCancion(busqueda) {
         '--no-check-certificate', // Don't verify SSL certificates
         '--match-filter', 'duration < 1200', // Filter videos shorter than 1200 seconds (20 minutes)
         `ytsearch:${busqueda}`,
-        '-o', `${carpeta}/${nombreArchivo}`
+        '-o', `${carpeta}/${nombreArchivo}`,
+        '--cookies', cookiesPath // Add this line to use cookies
     ];
 
     return new Promise((resolve, reject) => {
