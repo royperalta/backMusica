@@ -21,7 +21,7 @@ app.use('/api', route);
 };
  */
 
-/* const httpsOptions = {
+const httpsOptions = {
   key: fs.readFileSync('/etc/letsencrypt/live/envivo.top/privkey.pem'), // Ruta a tu clave privada
   cert: fs.readFileSync('/etc/letsencrypt/live/envivo.top/fullchain.pem'), // Ruta a tu certificado
 };
@@ -33,9 +33,9 @@ const PORT = 9100; // Cambié el puerto a 9100
 
 httpsServer.listen(PORT, () => {
   console.log('El servidor está corriendo en el puerto ' + PORT);
-}); */
+});
 
-const PORT = 9100; // Cambié el puerto a 9100
+/* const PORT = 9100; // Cambié el puerto a 9100
 app.listen(PORT, () => {
   console.log('El servidor está corriendo en el puerto ' + PORT);
-});
+}); */
