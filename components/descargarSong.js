@@ -80,6 +80,7 @@ const path = require('path');
 
 const ytDlpPath = './extensiones/yt-dlp'; // Ruta al ejecutable yt-dlp
 const descargasPath = path.join(__dirname, '..', 'Descargas'); // Carpeta "Descargas" en la raíz principal
+const cookiesPath = './youtube-cookies.txt'; // Ruta al archivo de cookies
 
 function generarIdUnico() {
     return Math.random().toString(36).substring(2, 15);
@@ -99,6 +100,7 @@ async function descargarCancion(busqueda) {
                     '--extract-audio',                   
                     '--socket-timeout', '10', // Tiempo de espera del socket (en segundos)
                     '--no-check-certificate', // No verificar certificados SSL
+                    '--cookies', cookiesPath, // Añadir la ruta de las cookies
                     `ytsearch:${busqueda}`,
                     '-o',
                     `${carpeta}/${nombreArchivo}` // Especificar el nombre del archivo directamente aquí
